@@ -1,0 +1,65 @@
+# frozen_string_literal: true
+
+require 'bundler/setup'
+require 'sequel'
+
+migrations_path = File.join(
+  Gem::Specification.find_by_name('social_web-activity_pub').gem_dir,
+  'db',
+  'migrations'
+)
+
+tables = %i[
+  social_web_activity_pub_collections
+  social_web_activity_pub_keys
+  social_web_activity_pub_objects
+  social_web_activity_pub_relationships
+  social_web_activity_pub_schema_migrations
+]
+
+def db
+  require 'logger'
+  db = Sequel.connect(
+    ENV['SOCIAL_WEB_ACTIVITY_PUB_DATABASE_URL'],
+    loggers: Logger.new(STDOUT)
+  )
+  db.extension :caller_logging
+  db
+end
+
+namespace :social_web do
+  namespace :activity_pub do
+    namespace :db do
+      desc 'Remove SocialWeb tables'
+      task :drop_tables do
+        db.transaction do
+          db.drop_table?(*tables,  cascade: true)
+          puts 'Removed SocialWeb tables. ' \
+            'Run `rake sequel:db:migrate` to add them.'
+        end
+      end
+
+      desc 'Create SocialWeb tables'
+      task :migrate do
+        Sequel.extension :migration, :core_extensions
+
+        db.transaction do
+          Sequel::Migrator.run(
+            db,
+            migrations_path,
+            table: :social_web_activity_pub_schema_migrations
+          )
+          puts 'Created SocialWeb tables. ' \
+            'Run `rake sequel:db:drop_tables` to remove them.'
+        end
+      end
+
+      desc 'Print SocialWeb migrations'
+      task :print_migrations do
+        Dir[File.join(migrations_path, '*.rb')].each do |migration|
+          puts File.read(migration)
+        end
+      end
+    end
+  end
+end
