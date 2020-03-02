@@ -33,9 +33,9 @@ namespace :social_web do
       desc 'Remove SocialWeb tables'
       task :drop_tables do
         db.transaction do
-          db.drop_table?(*tables,  cascade: true)
+          db.drop_table?(*tables)
           puts 'Removed SocialWeb tables. ' \
-            'Run `rake sequel:db:migrate` to add them.'
+            'Run `rake social_web:activity_pub:db:migrate` to add them.'
         end
       end
 
@@ -50,7 +50,7 @@ namespace :social_web do
             table: :social_web_activity_pub_schema_migrations
           )
           puts 'Created SocialWeb tables. ' \
-            'Run `rake sequel:db:drop_tables` to remove them.'
+            'Run `rake social_web:activity_pub:db:drop_tables` to remove them.'
         end
       end
 

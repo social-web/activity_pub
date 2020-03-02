@@ -4,10 +4,10 @@ SocialWeb::ActivityPub::Container.boot :logging do
   init do
     require 'logger'
 
-    SocialWeb::LOG_FORMATTER = lambda do |severity, datetime, progname, msg|
+    SocialWeb::ActivityPub::LOG_FORMATTER = lambda do |severity, datetime, progname, msg|
       ::Logger::Formatter.new.call(severity, datetime, 'SocialWeb::ActivityPub', msg)
     end
 
-    register(:logger, ::Logger.new(STDOUT, formatter: SocialWeb::LOG_FORMATTER))
+    register(:logger, ::Logger.new(STDOUT, formatter: SocialWeb::ActivityPub::LOG_FORMATTER))
   end
 end

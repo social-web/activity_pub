@@ -1,36 +1,38 @@
 # frozen_string_literal: true
 
 module SocialWeb
-  module Repositories
-    class Relationships
-      def get(parent:, child:, prop:)
-        relationships.first(
-          type: prop.to_s,
-          parent_iri: parent[:id],
-          child_iri: child[:id],
-        )
-      end
+  module ActivityPub
+    module Repositories
+      class Relationships
+        def get(parent:, child:, prop:)
+          relationships.first(
+            type: prop.to_s,
+            parent_iri: parent[:id],
+            child_iri: child[:id],
+          )
+        end
 
-      def store(parent:, child:, property:)
-        return if stored?(parent: parent, child: child, prop: property) ||
-          !parent[:id] || !child[:id]
+        def store(parent:, child:, property:)
+          return if stored?(parent: parent, child: child, prop: property) ||
+            !parent[:id] || !child[:id]
 
-        relationships.insert(
-          type: property.to_s,
-          parent_iri: parent[:id],
-          child_iri: child[:id],
-          created_at: Time.now.utc
-        )
-      end
+          relationships.insert(
+            type: property.to_s,
+            parent_iri: parent[:id],
+            child_iri: child[:id],
+            created_at: Time.now.utc
+          )
+        end
 
-      def stored?(parent:, child:, prop:)
-        !get(parent: parent, child: child, prop: prop).nil?
-      end
+        def stored?(parent:, child:, prop:)
+          !get(parent: parent, child: child, prop: prop).nil?
+        end
 
-      private
+        private
 
-      def relationships
-        SocialWeb::ActivityPub['relations.relationships']
+        def relationships
+          SocialWeb::ActivityPub['relations.relationships']
+        end
       end
     end
   end

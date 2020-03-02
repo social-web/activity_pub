@@ -85,7 +85,7 @@ module SocialWeb
         end
 
         def signature(request)
-          keys = SocialWeb.container['repositories.keys'].get_keys_for(actor)
+          keys = SocialWeb::ActivityPub['repositories.keys'].get_keys_for(actor)
 
           Signature.call(
             request,
