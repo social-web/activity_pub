@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'roda/session_middleware'
+
 module SocialWeb
   module ActivityPub
     module Rack
@@ -21,11 +23,11 @@ module SocialWeb
       plugin :header_matchers
 
       route do |r|
-        iri = r.url
-        actor_iri = parse_actor_iri(iri)
-        collection_type= parse_collection(iri)
-
         r.on [{ header: 'accept' }, { header: 'content-type' }] do |content_type|
+          iri = r.url
+          actor_iri = parse_actor_iri(iri)
+          collection_type= parse_collection(iri)
+
           return unless ACTIVITY_JSON_MIME_TYPES.include?(content_type)
 
           r.get do

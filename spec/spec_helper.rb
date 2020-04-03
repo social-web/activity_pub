@@ -8,7 +8,7 @@ require_relative '../system/social_web/activity_pub/boot'
 SocialWeb::ActivityPub.configure do |config|
   config.logger = ::Logger.new(
     File.join('log', 'social_web_test.log'),
-    formatter: SocialWeb::LOG_FORMATTER
+    formatter: SocialWeb::ActivityPub::LOG_FORMATTER
   )
   config.max_depth = 200
 end

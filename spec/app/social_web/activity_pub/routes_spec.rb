@@ -10,12 +10,16 @@ module SocialWeb
 
         it 'returns the JSON representation of the found object' do
           obj = create :object
+
           get obj[:id]
-          expect(JSON.parse(last_response.body)).to eq(JSON.parse(obj.to_json))
+
+          expect(JSON.parse(last_response.body)).
+            to eq(JSON.parse(obj.to_json))
         end
 
         it 'returns an empty 404 response if the object does not exist' do
-          get '/some-object'
+          get '/not-found-path'
+
           expect(last_response.status).to eq(404)
           expect(last_response.body).to be_empty
         end
@@ -33,6 +37,7 @@ module SocialWeb
               actor[collection.to_sym] = col
 
               get "#{actor[:id]}/#{collection}"
+
               expect(JSON.parse(last_response.body)).
                 to eq(JSON.parse(col.to_json))
             end
