@@ -12,8 +12,8 @@ migrations_path = File.join(
 tables = %i[
   social_web_activity_pub_collections
   social_web_activity_pub_keys
-  social_web_activity_pub_objects
   social_web_activity_pub_relationships
+  social_web_activity_pub_objects
   social_web_activity_pub_schema_migrations
 ]
 
