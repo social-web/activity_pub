@@ -26,9 +26,8 @@ module SocialWeb
 
         def generate_id
           format(
-            '%<scheme>s://%<host>s/social_web/objects/%<slug>s',
-            scheme: 'https',
-            host: SocialWeb::ActivityPub[:config].hostname,
+            '%<base_url>s/activity_pub/objects/%<slug>s',
+            base_url: SocialWeb::ActivityPub[:config].base_url,
             slug: SecureRandom.hex
           )
         end
