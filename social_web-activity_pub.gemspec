@@ -3,8 +3,8 @@
 Gem::Specification.new do |s|
   s.name = 'social_web-activity_pub'
   s.version = '0.1'
-  s.summary = ''
-  s.description = 'A suite of apps and tools for participating in the social web'
+  s.description = 'An ActivityPub implementation'
+  s.summary = 'Provides business logic, an HTTP adapter for access, and relational storage'
 
   s.license = 'MIT'
 
