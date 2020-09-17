@@ -6,16 +6,16 @@ SocialWeb::ActivityPub::Container.boot :persistence do
 
     container.namespace(:relations) do
       require 'social_web/activity_pub/relations/objects'
-      register(:objects, SocialWeb::ActivityPub::Relations::Objects)
+      register(:objects) { SocialWeb::ActivityPub::Relations::Objects }
 
       require 'social_web/activity_pub/relations/collections'
-      register(:collections, SocialWeb::ActivityPub::Relations::Collections)
+      register(:collections) { SocialWeb::ActivityPub::Relations::Collections }
 
       require 'social_web/activity_pub/relations/keys'
-      register(:keys, SocialWeb::ActivityPub::Relations::Keys)
+      register(:keys) { SocialWeb::ActivityPub::Relations::Keys }
 
       require 'social_web/activity_pub/relations/relationships'
-      register(:relationships, SocialWeb::ActivityPub::Relations::Relationships)
+      register(:relationships) { SocialWeb::ActivityPub::Relations::Relationships }
     end
 
 
