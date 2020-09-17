@@ -14,6 +14,7 @@ module SocialWeb
 
     class Container < Dry::System::Container
       configure do |config|
+        config.bootable_dirs = ['system/social_web/activity_pub/boot']
         config.default_namespace = 'social_web.activity_pub'
         config.root = Pathname(File.join(__dir__, '..', '..', '..')).realpath.freeze
         config.system_dir = 'system/social_web/activity_pub'
