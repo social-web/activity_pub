@@ -24,11 +24,11 @@ module SocialWeb
 
       route do |r|
         r.on [{ header: 'accept' }, { header: 'content-type' }] do |content_type|
+          return unless relevant_content_type?(content_type)
+
           iri = r.url
           actor_iri = parse_actor_iri(iri)
           collection_type= parse_collection(iri)
-
-          return unless ACTIVITY_JSON_MIME_TYPES.include?(content_type)
 
           r.get do
             r.on(/.*#{COLLECTION_REGEX}/) do |collection_type|
@@ -65,6 +65,10 @@ module SocialWeb
 
       def parse_collection(url)
         url[COLLECTION_REGEX]
+      end
+
+      def relevant_content_type?(content_type)
+        ACTIVITY_JSON_MIME_TYPES.any? { |type| content_type.include?(type) }
       end
     end
   end
