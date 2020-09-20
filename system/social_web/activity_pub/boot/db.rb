@@ -5,7 +5,7 @@ SocialWeb::ActivityPub::Container.boot :db do
     require 'sequel'
 
     db = Sequel.connect(
-      ENV['SOCIAL_WEB_ACTIVITY_PUB_DATABASE_URL'],
+      ENV.fetch('SOCIAL_WEB_ACTIVITY_PUB_DATABASE_URL'),
       loggers: SocialWeb::ActivityPub[:config].logger
     )
 

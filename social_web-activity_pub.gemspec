@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'sequel'
 
   s.add_development_dependency 'bundler', '~> 2.0'
+  s.add_development_dependency 'dotenv', '~> 2.0'
   s.add_development_dependency 'dry-auto_inject'
   s.add_development_dependency 'factory_bot'
   s.add_development_dependency 'pg'

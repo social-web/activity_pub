@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'dotenv'
+Dotenv.load('.env.dev')
+
 require 'sequel'
 
 migrations_path = File.join(
@@ -20,7 +23,7 @@ tables = %i[
 def db
   require 'logger'
   db = Sequel.connect(
-    ENV['SOCIAL_WEB_ACTIVITY_PUB_DATABASE_URL'],
+    ENV.fetch('SOCIAL_WEB_ACTIVITY_PUB_DATABASE_URL'),
     loggers: Logger.new(STDOUT)
   )
   db.extension :caller_logging
