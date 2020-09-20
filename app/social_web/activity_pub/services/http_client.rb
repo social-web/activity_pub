@@ -6,6 +6,8 @@ module SocialWeb
   module ActivityPub
     module Services
       class HTTPClient
+        class RequestError < StandardError; end
+
         LD_JSON_MIME_TYPE = 'application/ld+json; profile="https://www.w3.org/ns/activitystreams"'
         ACTIVITY_JSON_MIME_TYPE = "#{LD_JSON_MIME_TYPE}; application/activity+json"
 
@@ -48,7 +50,7 @@ module SocialWeb
           if res.status.success?
             ActivityStreams.from_json(res.body.to_s)
           else
-            SocialWeb::ActivityPub[:config].logger.error(res.body.to_s)
+            SocialWeb::ActivityPub[:config].logger.error(request_error(res))
             nil
           end
         end
@@ -70,7 +72,7 @@ module SocialWeb
           if res.status.success?
             true
           else
-            SocialWeb::ActivityPub[:config].logger.error(res.body.to_s)
+            SocialWeb::ActivityPub[:config].logger.error(request_error(res))
             false
           end
         end
@@ -82,6 +84,12 @@ module SocialWeb
         def perform(request)
           client = ::HTTP::Client.new
           client.perform(request, client.default_options)
+        end
+
+        def request_error(request, response)
+          exception = RequestError.new(response.body.to_s)
+          exception.set_caller(caller)
+          exception.full_message
         end
 
         def signature(request)
