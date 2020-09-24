@@ -19,15 +19,11 @@ tables = %i[
   social_web_activity_pub_objects
   social_web_activity_pub_schema_migrations
 ]
-
 def db
-  require 'logger'
-  db = Sequel.connect(
-    ENV.fetch('SOCIAL_WEB_ACTIVITY_PUB_DATABASE_URL'),
-    loggers: Logger.new(STDOUT)
-  )
-  db.extension :caller_logging
-  db
+  @db ||= begin
+    SocialWeb::ActivityPub.container.start(:db)
+    SocialWeb::ActivityPub[:db]
+  end
 end
 
 namespace :social_web do
