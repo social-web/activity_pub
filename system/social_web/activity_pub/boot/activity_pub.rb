@@ -2,11 +2,6 @@
 
 SocialWeb::ActivityPub::Container.boot :activity_pub do
   init do
-    use :activity_streams
-
-    require 'social_web/activity_pub/ext/activity_streams_extension'
-    ActivityStreams::Actor.extend(ActivityStreams::Extensions::ActivityPub)
-
     require 'social_web/activity_pub/process'
 
     require 'social_web/activity_pub/collection'
