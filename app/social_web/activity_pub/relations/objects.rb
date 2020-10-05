@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative './concerns/normalize_id'
-
 module SocialWeb
   module ActivityPub
     module Relations
@@ -24,7 +22,7 @@ module SocialWeb
 
         dataset_module do
           def by_iri(iri)
-            where(iri: normalize_id(iri))
+            where(iri: iri)
           end
 
           def by_type(type)
