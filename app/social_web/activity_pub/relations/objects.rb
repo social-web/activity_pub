@@ -6,8 +6,6 @@ module SocialWeb
   module ActivityPub
     module Relations
       class Objects < ::Sequel::Model(SocialWeb::ActivityPub[:db][:social_web_activity_pub_objects])
-        include NormalizeID
-
         set_primary_key :iri
 
         many_to_many :children,

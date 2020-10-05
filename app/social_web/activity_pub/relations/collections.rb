@@ -6,8 +6,6 @@ module SocialWeb
   module ActivityPub
     module Relations
       class Collections < Sequel::Model(SocialWeb::ActivityPub[:db][:social_web_activity_pub_collections])
-        include NormalizeID
-
         dataset_module do
           def by_object_iri(iri)
             where(object_iri: normalize_id(iri))
