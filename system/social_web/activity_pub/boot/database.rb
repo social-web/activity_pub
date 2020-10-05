@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-SocialWeb::ActivityPub::Container.boot :db do
+SocialWeb::ActivityPub::Container.boot :database do
   init do
     use :configuration
     require 'sequel'

@@ -2,7 +2,7 @@
 
 SocialWeb::ActivityPub::Container.boot :persistence do
   init do
-    use :db
+    use :database
 
     container.namespace(:relations) do
       require 'social_web/activity_pub/relations/objects'

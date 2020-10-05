@@ -24,6 +24,8 @@ Gem::Specification.new do |s|
   # Provides easy access to an HTTP client
   s.add_dependency 'http'
 
+  s.add_dependency 'message_bus'
+
   # Provides Ruby models to represent Activity Streams objects
   s.add_dependency 'social_web-activity_streams'
 
