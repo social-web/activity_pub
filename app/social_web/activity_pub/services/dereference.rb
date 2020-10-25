@@ -53,7 +53,7 @@ module SocialWeb
 
         def dereference_collection(actor, collection, collection_name)
           collection.traverse_items(depth: SocialWeb::ActivityPub[:config].max_depth) do |collection|
-            collection = dereference_uri(collection) if is_a_uri?(collection)\
+            collection = dereference_uri(collection) if is_a_uri?(collection)
 
             if collection.is_a?(ActivityStreams::OrderedCollection)
               collection[:orderedItems] ||= []

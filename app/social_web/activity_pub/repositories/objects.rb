@@ -21,6 +21,11 @@ module SocialWeb
           def_delegator :@cache, :[]=, :set
         end
 
+        # TODO:
+        #   Add caching:
+        #   1. Access via memory cache
+        #   2. Access via database
+        #   3. Access via dereferencer
         def get_by_iri(iri)
           found = objects.by_iri(iri).first
           return if found.nil?
