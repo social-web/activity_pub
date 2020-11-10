@@ -5,8 +5,15 @@ SocialWeb::ActivityPub::Container.boot :db do
     use :configuration
     require 'sequel'
 
+    db_url = SocialWeb::ActivityPub[:config].database_url
+    db_params = SocialWeb::ActivityPub[:config].database_params
+
+    if !db_url && !db_params
+      raise ::SocialWeb::ActivityPub::Error, 'A database url string or database params hash is required.'
+    end
+
     db = Sequel.connect(
-      SocialWeb::ActivityPub[:config].database_url || SocialWeb::ActivityPub[:config].database_params,
+      db_url || db_params,
       loggers: SocialWeb::ActivityPub[:config].logger
     )
 
