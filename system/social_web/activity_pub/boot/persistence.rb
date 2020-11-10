@@ -18,7 +18,6 @@ SocialWeb::ActivityPub::Container.boot :persistence do
       register(:relationships, SocialWeb::ActivityPub::Relations::Relationships)
     end
 
-
     container.namespace(:repositories) do
       require 'social_web/activity_pub/repositories/objects'
       register(:objects, SocialWeb::ActivityPub::Repositories::Objects.new)
