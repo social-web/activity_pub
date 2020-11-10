@@ -11,13 +11,13 @@ Sequel.migration do
       Time :created_at, null: false
       Time :updated_at, null: true
 
-      foreign_key :object_iri,
+      foreign_key :object_id,
         :social_web_activity_pub_objects,
-        key: :iri,
+        key: :id,
         type: String,
         on_delete: :cascade,
         on_update: :cascade
-      index :object_iri, unique: true
+      index :object_id, unique: true
     end
   end
 end

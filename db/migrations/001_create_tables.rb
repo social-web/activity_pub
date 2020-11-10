@@ -3,10 +3,7 @@
 Sequel.migration do
   change do
     create_table(:social_web_activity_pub_objects) do
-      primary_key :id
-
-      String :iri, null: false
-      index :iri, unique: true
+      primary_key :id, type: String
 
       String :json, null: false
 
@@ -21,15 +18,15 @@ Sequel.migration do
       primary_key :id
 
       String :type, null: false
-      foreign_key :parent_iri,
+      foreign_key :parent_id,
         :social_web_activity_pub_objects,
-        key: :iri,
+        key: :id,
         on_delete: :cascade,
         on_update: :cascade,
         type: String
-      foreign_key :child_iri,
+      foreign_key :child_id,
         :social_web_activity_pub_objects,
-        key: :iri,
+        key: :id,
         on_delete: :cascade,
         on_update: :cascade,
         type: String
@@ -38,22 +35,22 @@ Sequel.migration do
       Time :created_at, null: false
       Time :updated_at, null: true
 
-      index %i[child_iri parent_iri type], unique: true
+      index %i[child_id parent_id type], unique: true
     end
 
     create_table(:social_web_activity_pub_collections) do
       primary_key :id
 
       String :type, null: false
-      foreign_key :actor_iri,
+      foreign_key :actor_id,
         :social_web_activity_pub_objects,
-        key: :iri,
+        key: :id,
         on_delete: :cascade,
         on_update: :cascade,
         type: String
-      foreign_key :object_iri,
+      foreign_key :object_id,
         :social_web_activity_pub_objects,
-        key: :iri,
+        key: :id,
         on_delete: :cascade,
         on_update: :cascade,
         type: String
@@ -61,7 +58,7 @@ Sequel.migration do
       Time :created_at, null: false
       Time :updated_at, null: true
 
-      index %i[type actor_iri object_iri], unique: true
+      index %i[type actor_id object_id], unique: true
     end
   end
 end
