@@ -21,8 +21,8 @@ module SocialWeb
           def_delegator :@cache, :[]=, :set
         end
 
-        def get_by_iri(iri)
-          found = objects.by_iri(iri).first
+        def get_by_id(id)
+          found = objects.by_id(id).first
           return if found.nil?
 
           obj = ActivityStreams.from_json(found[:json])
@@ -33,13 +33,13 @@ module SocialWeb
         end
 
         def delete(obj)
-          objects.by_iri(obj[:id]).delete
+          objects.by_id(obj[:id]).delete
           true
         end
 
         def replace(obj)
           compressed = obj.compress
-          objects.by_iri(obj[:id]).update(json: obj.to_json)
+          objects.by_id(obj[:id]).update(json: obj.to_json)
           true
         end
 
@@ -49,7 +49,7 @@ module SocialWeb
           compressed = obj.compress
 
           objects.insert(
-            iri: compressed[:id],
+            id: compressed[:id],
             type: compressed[:type],
             json: compressed.to_json,
             created_at: Time.now.utc
@@ -71,15 +71,15 @@ module SocialWeb
           tree =  objects.traverse_children(root[:id]).all +
             objects.traverse_parents(root[:id]).all
           tree.each do |property_map|
-            keys = %i[parent_iri parent_json child_iri child_json rel_type]
-            parent_iri,
+            keys = %i[parent_id parent_json child_id child_json rel_type]
+            parent_id,
               parent_json,
-              child_iri,
+              child_id,
               child_json,
               rel_type = property_map.values_at(*keys)
 
-            parent = cache.fetch(parent_iri) { ActivityStreams.from_json(parent_json) }
-            child = cache.fetch(child_iri) { ActivityStreams.from_json(child_json) }
+            parent = cache.fetch(parent_id) { ActivityStreams.from_json(parent_json) }
+            child = cache.fetch(child_id) { ActivityStreams.from_json(child_json) }
 
             yield(parent: parent, child: child, property: rel_type)
 
@@ -96,7 +96,7 @@ module SocialWeb
         def stored?(obj)
           return false unless obj[:id]
 
-          found = objects.by_iri(obj[:id]).first
+          found = objects.by_id(obj[:id]).first
           !found.nil?
         end
       end

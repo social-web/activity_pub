@@ -26,13 +26,13 @@ module SocialWeb
         r.on [{ header: 'accept' }, { header: 'content-type' }] do |content_type|
           return unless relevant_content_type?(content_type)
 
-          iri = r.url
-          actor_iri = parse_actor_iri(iri)
-          collection_type= parse_collection(iri)
+          id = r.url
+          actor_id = parse_actor_id(id)
+          collection_type= parse_collection(id)
 
           r.get do
             r.on(/.*#{COLLECTION_REGEX}/) do |collection_type|
-              actor = SocialWeb::ActivityPub['repositories.objects'].get_by_iri(actor_iri)
+              actor = SocialWeb::ActivityPub['repositories.objects'].get_by_id(actor_id)
               collection = SocialWeb::ActivityPub['repositories.collections'].
                 get_collection_for_actor(actor: actor, collection: collection_type)
 
@@ -40,7 +40,7 @@ module SocialWeb
               collection.to_json
             end
 
-            found = SocialWeb::ActivityPub['repositories.objects'].get_by_iri(iri)
+            found = SocialWeb::ActivityPub['repositories.objects'].get_by_id(id)
             if found.nil?
               response.status = 404
               nil
@@ -51,14 +51,14 @@ module SocialWeb
 
           r.post do
             activity_json = r.body.read
-            SocialWeb::ActivityPub.process(activity_json, actor_iri, collection_type)
+            SocialWeb::ActivityPub.process(activity_json, actor_id, collection_type)
             response.status = 201
             ''
           end
         end
       end
 
-      def parse_actor_iri(url)
+      def parse_actor_id(url)
         match = url.match(/(.*)\/#{COLLECTION_REGEX}/)
         match ? match[1] : url
       end

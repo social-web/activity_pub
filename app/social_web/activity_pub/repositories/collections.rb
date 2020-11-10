@@ -6,7 +6,7 @@ module SocialWeb
       class Collections
         def get_collection_for_actor(actor:, collection:)
           items = SocialWeb::ActivityPub['relations.collections'].
-            by_actor_iri(actor[:id]).
+            by_actor_id(actor[:id]).
             by_type(collection).
             with_objects.
             order(Sequel.desc(Sequel[:social_web_activity_pub_collections][:created_at])).
@@ -23,8 +23,8 @@ module SocialWeb
 
           collections.insert(
             type: collection.to_s,
-            object_iri: object[:id],
-            actor_iri: actor[:id],
+            object_id: object[:id],
+            actor_id: actor[:id],
             created_at: Time.now.utc
           )
         end
@@ -32,8 +32,8 @@ module SocialWeb
         def stored?(object:, collection:, actor:)
           found = collections.
             where(
-              actor_iri: actor[:id],
-              object_iri: object[:id],
+              actor_id: actor[:id],
+              object_id: object[:id],
               type: collection.to_s
             ).
             first

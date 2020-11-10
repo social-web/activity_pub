@@ -3,7 +3,7 @@
 Sequel.migration do
   change do
     create_table(:social_web_activity_pub_objects) do
-      primary_key :id, type: String
+      String :id, primary_key: true, type: String
 
       String :json, null: false
 

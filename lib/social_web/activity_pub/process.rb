@@ -2,17 +2,17 @@
 
 module SocialWeb
   module ActivityPub
-    def self.process(activity_json, actor_iri, collection)
+    def self.process(activity_json, actor_id, collection)
       SocialWeb::ActivityPub[:config].logger.debug <<~MSG
         Processing:
   
         activity_json: #{activity_json}
-        actor_iri: #{actor_iri}
+        actor_id: #{actor_id}
         collection: #{collection}
       MSG
 
       activity = ActivityStreams.from_json(activity_json)
-      actor = SocialWeb::ActivityPub['repositories.objects'].get_by_iri(actor_iri)
+      actor = SocialWeb::ActivityPub['repositories.objects'].get_by_id(actor_id)
 
       SocialWeb::ActivityPub['repositories.objects'].store(activity)
 

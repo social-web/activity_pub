@@ -5,12 +5,12 @@ module SocialWeb
     module Relations
       class Collections < Sequel::Model(SocialWeb::ActivityPub[:db][:social_web_activity_pub_collections])
         dataset_module do
-          def by_object_iri(iri)
-            where(object_iri: iri)
+          def by_object_id(id)
+            where(object_id: id)
           end
 
-          def by_actor_iri(iri)
-            where(actor_iri: iri)
+          def by_actor_id(id)
+            where(actor_id: id)
           end
 
           def by_type(type)
@@ -18,7 +18,7 @@ module SocialWeb
           end
 
           def with_objects
-            join(:social_web_activity_pub_objects, iri: :object_iri)
+            join(:social_web_activity_pub_objects, id: :object_id)
           end
         end
       end

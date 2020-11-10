@@ -39,10 +39,10 @@ module SocialWeb
           @actor = for_actor
         end
 
-        # @param [String] iri
+        # @param [String] id
         # @return [nil, ActivityStreams]
-        def get(iri)
-          request = http_client.build_request(:get, iri)
+        def get(id)
+          request = http_client.build_request(:get, id)
           request.headers[:accept] = ACTIVITY_JSON_MIME_TYPE
           sign_request(request)
 

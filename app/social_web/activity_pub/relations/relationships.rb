@@ -5,12 +5,12 @@ module SocialWeb
     module Relations
       class Relationships < Sequel::Model(SocialWeb::ActivityPub[:db][:social_web_activity_pub_relationships])
         dataset_module do
-          def by_child_iri(iri)
-            where(child_iri: iri)
+          def by_child_id(id)
+            where(child_id: id)
           end
 
-          def by_parent_iri(iri)
-            where(parent_iri: iri)
+          def by_parent_id(id)
+            where(parent_id: id)
           end
 
           def by_type(type)

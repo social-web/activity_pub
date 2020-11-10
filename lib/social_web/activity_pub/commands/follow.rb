@@ -12,8 +12,8 @@ module SocialWeb
           @actor = for_actor
         end
 
-        def call(iri)
-          followee = SocialWeb::ActivityPub['services.http_client'].for_actor(@actor).get(iri)
+        def call(id)
+          followee = SocialWeb::ActivityPub['services.http_client'].for_actor(@actor).get(id)
           follow = ActivityStreams.follow(actor: @actor, object: followee)
           SocialWeb::ActivityPub['collections.outbox'].for_actor(@actor).process(follow)
         end

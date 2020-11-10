@@ -7,8 +7,8 @@ module SocialWeb
         def get(parent:, child:, prop:)
           relationships.first(
             type: prop.to_s,
-            parent_iri: parent[:id],
-            child_iri: child[:id],
+            parent_id: parent[:id],
+            child_id: child[:id],
           )
         end
 
@@ -18,8 +18,8 @@ module SocialWeb
 
           relationships.insert(
             type: property.to_s,
-            parent_iri: parent[:id],
-            child_iri: child[:id],
+            parent_id: parent[:id],
+            child_id: child[:id],
             created_at: Time.now.utc
           )
         end

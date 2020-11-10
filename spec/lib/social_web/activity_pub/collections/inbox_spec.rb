@@ -45,7 +45,7 @@ module SocialWeb
               expect { collection.process(update_act) }.
                 to change {
                   obj = SocialWeb::ActivityPub['repositories.objects'].
-                    get_by_iri(existing_obj[:id])
+                    get_by_id(existing_obj[:id])
                   obj[:content]
                 }.from(old_content).to(new_content)
               expect(collection).to include(update_act)
