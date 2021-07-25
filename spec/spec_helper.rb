@@ -3,7 +3,7 @@
 ENV['RACK_ENV'] = 'test'
 ENV['SOCIAL_WEB_ACTIVITY_PUB_DATABASE_URL'] = 'sqlite://social_web_activity_pub_test.sqlite3'
 
-require_relative '../system/social_web/activity_pub/boot'
+require_relative '../system/social_web/activity_pub'
 
 SocialWeb::ActivityPub.configure do |config|
   config.logger = ::Logger.new(
