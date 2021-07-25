@@ -3,14 +3,6 @@
 module SocialWeb
   module ActivityPub
     def self.process(activity_json, actor_id, collection)
-      SocialWeb::ActivityPub[:config].logger.debug <<~MSG
-        Processing:
-  
-        activity_json: #{activity_json}
-        actor_id: #{actor_id}
-        collection: #{collection}
-      MSG
-
       activity = ActivityStreams.from_json(activity_json)
       actor = SocialWeb::ActivityPub['repositories.objects'].get_by_id(actor_id)
 
