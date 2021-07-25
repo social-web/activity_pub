@@ -13,7 +13,7 @@ SocialWeb::ActivityPub.configure do |config|
   config.max_depth = 200
 end
 
-SocialWeb::ActivityPub::Container.finalize!
+require_relative '../system/social_web/activity_pub/boot'
 
 require 'rack/test'
 require 'factory_bot'
