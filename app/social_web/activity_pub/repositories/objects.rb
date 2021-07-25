@@ -27,7 +27,7 @@ module SocialWeb
 
           obj = ActivityStreams.from_json(found[:json])
 
-          # TODO: Reconsistute separately
+          # TODO: Reconstitute separately
           SocialWeb::ActivityPub['services.reconstitute'].call(obj)
           obj
         end
